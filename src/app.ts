@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import userRoutes from "./routes/user.routes.js";
 dotenv.config();
 
 //servidor
@@ -11,7 +12,7 @@ app.use(express.json());
 // rotas
 app
 	.get('/health', (_req, res) => res.send('OK!'))
-	//.use([]);
+	.use('/users', userRoutes);
 
 
 // porta e listen
