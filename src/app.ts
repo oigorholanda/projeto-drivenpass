@@ -11,8 +11,8 @@ app.use(express.json());
 
 // rotas
 app
-	.get('/health', (_req, res) => res.send('OK!'))
-	.use('/users', userRoutes);
+	.get('/health', (_req, res) => res.send("i'm OK!"))
+	.use('/user', userRoutes);
 
 
 // porta e listen

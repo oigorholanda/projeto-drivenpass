@@ -1,16 +1,23 @@
 import { Request, Response } from "express";
 import prisma from "../config/database.js";
+import { UserInput } from "protocols.js";
 
 async function getUsers() {
     return prisma.user.findMany()
 }
 
-async function createUser(email: string, password: string) {
+async function createUser(user: UserInput) {
     return prisma.user.create({
-        data: {
-            email: email,
-            password: password
-        }})
+        data: user
+    })
 }
 
-export { getUsers, createUser }
+async function findUser(email:string) {         
+    return prisma.user.findFirst({
+        where: {
+            email,
+        },
+    })
+}
+
+export default { getUsers, createUser, findUser }
