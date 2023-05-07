@@ -15,7 +15,7 @@ async function createUser(user: UserInput) {
 async function findUser(email:string) {         
     return prisma.user.findFirst({
         where: {
-            email,
+            email: email,
         },
     })
 }

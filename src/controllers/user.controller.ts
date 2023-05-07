@@ -4,7 +4,7 @@ import { UserInput } from "protocols.js";
 import userService from "../services/user.service.js";
 import httpStatus from "http-status";
 
-async function listAll(req: Request, res: Response) {
+async function listAll(_req: Request, res: Response) {
     const users = await userRepository.getUsers()
     return res.send(users)
 }
@@ -21,8 +21,8 @@ async function newUser(req: Request, res: Response) {
             id: newUser.id,
             email: newUser.email
         })
-    } catch (error) {
-        if (error.message === "User already existis!") {
+    } catch (error) {  
+        if (error.type === "ConflictError") {
             return res.status(httpStatus.CONFLICT).send(error.message) 
         }
         return res.status(httpStatus.BAD_REQUEST).send(error)
