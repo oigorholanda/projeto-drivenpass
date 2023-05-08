@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
+import credentialRoutes from "./routes/credential.routes.js";
 dotenv.config();
 
 //servidor
@@ -12,7 +13,8 @@ app.use(express.json());
 // rotas
 app
 	.get('/health', (_req, res) => res.send("i'm OK!"))
-	.use('/user', userRoutes);
+	.use('/user', userRoutes)
+	.use('/credential', credentialRoutes)
 
 
 // porta e listen

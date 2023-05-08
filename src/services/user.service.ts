@@ -18,25 +18,25 @@ async function createUser({ email, password }: UserInput) {
 }
 
 async function logUser({ email, password }: UserInput) {
-    const isValidUser = await userRepository.findUser(email)
+    const validUser = await userRepository.findUser(email)
 
-    if (!isValidUser) {
+    if (!validUser) {
         throw { type: "InvalidCredentialsError", message: "Email or password are incorrect!"}
     } 
 
-    const isValidPassword = await bcrypt.compare(password, isValidUser.password)
-    if (!isValidPassword) {
+    const validPassword = await bcrypt.compare(password, validUser.password)
+    if (!validPassword) {
         throw { type: "InvalidCredentialsError", message: "Email or password are incorrect!"}
     }
 
-   const userId = isValidUser.id
-   delete isValidUser.password
+   const userId = validUser.id
+   delete validUser.password
    
 
-    const token = jwt.sign({userId}, process.env.JWT_SECRET)
+    const token = jwt.sign({userId}, process.env.JWT_SECRET, { expiresIn: '3h' })
 
     return {
-        User: isValidUser,
+        User: validUser,
         token
     }
 }
