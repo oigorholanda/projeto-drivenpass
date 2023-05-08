@@ -32,11 +32,19 @@ async function newUser(req: Request, res: Response) {
 
 async function logUser(req: Request, res: Response) {
     const UserInput = req.body as UserInput
-    const newUser = await userRepository.findUser( UserInput.email )
 
-    console.log(newUser);
+    try {
+        const validUser = await userService.logUser( UserInput )
 
-    return res.status(200).send(`Logado!`)
+        console.log(validUser); 
+
+        return res.status(httpStatus.OK).send(`Logado!`)
+    } catch (error) {
+        if (error.type === "InvalidCredentialsError") {
+            return res.status(httpStatus.UNAUTHORIZED).send(error.message) 
+        }
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error) 
+    }
 }
 
 
