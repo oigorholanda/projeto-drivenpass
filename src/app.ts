@@ -14,7 +14,8 @@ app.use(express.json());
 app
 	.get('/health', (_req, res) => res.send("i'm OK!"))
 	.use('/user', userRoutes)
-	.use('/credential', credentialRoutes)
+	.use('/credentials', credentialRoutes)
+	.use('/wifi', ()=>{})
 
 
 // porta e listen

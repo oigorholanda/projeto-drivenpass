@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import jwt from "jsonwebtoken";
 
+export type JWTPayload = {userId: number}
+
 export async function autorizeToken(req:Request, res: Response, next: NextFunction) {
     const authHeader = req.header('Authorization');
 
@@ -23,10 +25,7 @@ export async function autorizeToken(req:Request, res: Response, next: NextFuncti
         next()
 
     } catch (error) {
-        return res.status(httpStatus.UNAUTHORIZED).send("Invalid Token, please log in again");
+        return res.status(httpStatus.BAD_REQUEST).send("Invalid Token, please log in again");
     }
 }
 
-export type JWTPayload = {
-    userId: number
-}

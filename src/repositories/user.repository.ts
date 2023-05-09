@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import prisma from "../config/database.js";
 import { UserInput } from "protocols.js";
 
