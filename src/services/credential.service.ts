@@ -16,7 +16,6 @@ async function getCredentials(userId: number) {
 }
 
 
-
 async function getCredentialsById(userId: number, credentialId: number) {
     const credential = await credentialRepository.findOneById(credentialId);
 
@@ -44,6 +43,15 @@ async function createCredential(userId: number, {title,url,username,password}: C
     }, userId);
   }
 
+async function destroyCredential(userId: number, credentialId: number) {
+    const credential = await credentialRepository.findOneById(credentialId);
+    if (!credential || credential.userId !== userId) {
+      throw { type: "NotFoundError", message: "No result for this search!"};
+    }
+  
+    await credentialRepository.destroy(credentialId);
+  }
 
 
-export default { getCredentials, getCredentialsById, createCredential }
+
+export default { getCredentials, getCredentialsById, createCredential, destroyCredential }
