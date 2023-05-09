@@ -15,7 +15,7 @@ app
 	.get('/health', (_req, res) => res.send("i'm OK!"))
 	.use('/user', userRoutes)
 	.use('/credentials', credentialRoutes)
-	.use('/wifi', ()=>{})
+	.use('/network', ()=>{})
 
 
 // porta e listen

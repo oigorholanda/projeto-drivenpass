@@ -70,6 +70,9 @@ async function deleteCredential(req: Request, res: Response) {
       await credentialService.destroyCredential(userId, parseInt(credentialId));
       return res.sendStatus(httpStatus.ACCEPTED);
     } catch (error) {
+        if (error.type === "NotFoundError") {
+            return res.status(httpStatus.NOT_FOUND).send(error.message)
+        }
         return res.status(httpStatus.BAD_REQUEST).send(error);
     }
 }
