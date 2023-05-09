@@ -14,13 +14,22 @@ async function getCredentials(userId: number) {
     })
 }
 
-async function findOne(id: number) {         
+async function findOneById(id: number) {         
     return prisma.credential.findUnique({
         where: {
             id
         },
     })
 }
+
+async function findByTitle(userId: number, title: string) {
+    return prisma.credential.findFirst({
+      where: {
+        userId,
+        title,
+      },
+    });
+  }
 
 async function newCredential(credential: CredentialInput, userId: number) {
     return prisma.credential.create({
@@ -31,7 +40,15 @@ async function newCredential(credential: CredentialInput, userId: number) {
     });
 }
 
+async function destroy(credentialId: number) {
+    return prisma.credential.delete({
+      where: {
+        id: credentialId,
+      },
+    });
+  }
 
 
 
-export default { listAll, newCredential, getCredentials, findOne }
+
+export default { listAll, newCredential, getCredentials, findOneById, destroy, findByTitle }
