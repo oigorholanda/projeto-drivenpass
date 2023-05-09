@@ -3,9 +3,10 @@ import httpStatus from 'http-status';
 import supertest from 'supertest';
 import { createUser } from '../factories';
 import { cleanDb } from '../helpers';
-import { duplicatedEmailError } from '@/services/users-service';
-import { prisma } from '@/config';
-import app, { init } from '@/app';
+import { duplicatedEmailError } from '../services/users-service.test';
+import prisma from '../../src/config/database.js';
+import app from '../../src/app.js';
+import Cryptr from 'cryptr';
 
 beforeAll(async () => {
   await init();
@@ -13,6 +14,7 @@ beforeAll(async () => {
 });
 
 const server = supertest(app);
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 
 describe('POST /users', () => {
   it('should respond with status 400 when body is not given', async () => {

@@ -2,12 +2,14 @@ import faker from '@faker-js/faker';
 import { Credential, User } from '@prisma/client';
 import { createUser } from './users-factory';
 import prisma from '../../src/config/database.js';
-import { cryptrUtil } from '@/utils/cryptr-utils';
+import Cryptr from 'cryptr';
+
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 
 export async function createCredential(user?: User): Promise<Credential> {
   const incomingUser = user || (await createUser());
 
-  const password = cryptrUtil.encrypt(faker.internet.password(10));
+  const password = cryptr.encrypt(faker.internet.password(10));
 
   return prisma.credential.create({
     data: {

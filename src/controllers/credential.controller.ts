@@ -19,7 +19,7 @@ async function getCredentials(req: Request, res: Response) {
         return res.status(httpStatus.OK).send(credentials)
     } catch (error) {
         if (error.type === "NotFoundError") {
-            return res.status(httpStatus.NOT_FOUND).send(error.message) 
+            return res.status(httpStatus.NOT_FOUND).send(error.message)
         }
 
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error)
@@ -28,9 +28,9 @@ async function getCredentials(req: Request, res: Response) {
 
 
 async function findCredential(req: Request, res: Response) {
-    
+
     try {
-        const {credentialId} = req.params
+        const { credentialId } = req.params
         const userId = res.locals.userId
 
         const credentials = await credentialService.getCredentialsById(userId, parseInt(credentialId))
@@ -38,7 +38,7 @@ async function findCredential(req: Request, res: Response) {
         return res.status(httpStatus.OK).send(credentials)
     } catch (error) {
         if (error.type === "NotFoundError") {
-            return res.status(httpStatus.NOT_FOUND).send(error.message) 
+            return res.status(httpStatus.NOT_FOUND).send(error.message)
         }
 
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error)
@@ -49,20 +49,29 @@ async function findCredential(req: Request, res: Response) {
 async function newCredential(req: Request, res: Response) {
     try {
         const newCredential = req.body as CredentialInput
+        const userId = res.locals.userId
 
-        const credentials = await credentialRepository.getCredentials(newCredential)
+        const credentials = await credentialService.createCredential(userId, newCredential)
 
-        return res.send(credentials)
+        return res.status(httpStatus.CREATED).send(credentials)
     } catch (error) {
-        if (error.type === "NotFoundError") {
-            return res.status(httpStatus.NOT_FOUND).send(error.message) 
+        if (error.name === 'DuplicatedTitleError') {
+            return res.status(httpStatus.CONFLICT).send(error.message);
         }
-        return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error)
+        return res.status(httpStatus.BAD_REQUEST).send(error);
     }
 }
 
 async function deleteCredential(req: Request, res: Response) {
-
+    const { credentialId } = req.params
+    const userId = res.locals.userId
+  
+    try {
+      await credentialService.destroyCredential(userId, parseInt(credentialId));
+      return res.sendStatus(httpStatus.ACCEPTED);
+    } catch (error) {
+      next(error);
+    }
 }
 
 export { listAll, getCredentials, newCredential, deleteCredential, findCredential }

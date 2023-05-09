@@ -5,15 +5,16 @@ import * as jwt from 'jsonwebtoken';
 import { createUser } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
 import { createNetwork } from '../factories/networks-factory';
-import app, { init } from '@/app';
-import { cryptrUtil } from '@/utils/cryptr-utils';
+import app from '../../src/app.js';
+import Cryptr from 'cryptr';
 
 beforeAll(async () => {
-  await init();
+  //await init();
   await cleanDb();
 });
 
 const server = supertest(app);
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
 
 describe('GET /networks', () => {
   it('should respond with status 401 if no token is given', async () => {
@@ -62,11 +63,11 @@ describe('GET /networks', () => {
       expect(response.body).toEqual([
         {
           ...network1,
-          password: cryptrUtil.decrypt(network1.password),
+          password: cryptr.decrypt(network1.password),
         },
         {
           ...network2,
-          password: cryptrUtil.decrypt(network2.password),
+          password: cryptr.decrypt(network2.password),
         },
       ]);
     });
@@ -130,7 +131,7 @@ describe('GET /networks/:networkId', () => {
 
       expect(response.body).toEqual({
         ...network,
-        password: cryptrUtil.decrypt(network.password),
+        password: cryptr.decrypt(network.password),
       });
     });
   });

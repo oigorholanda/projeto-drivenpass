@@ -1,9 +1,9 @@
 import httpStatus from 'http-status';
 import supertest from 'supertest';
-import app, { init } from '@/app';
+import app from '../../src/app.js';
 
 beforeAll(async () => {
-  await init();
+  //await init();
 });
 
 const server = supertest(app);

@@ -3,11 +3,11 @@ import bcrypt from 'bcrypt';
 import { createUser as createUserSeed } from '../factories';
 import { cleanDb } from '../helpers';
 import userService, { duplicatedEmailError } from '@/services/users-service';
-import { prisma } from '@/config';
-import { init } from '@/app';
+import prisma from '../../src/config/database.js';
+import app from '../../src/app.js';
 
 beforeAll(async () => {
-  await init();
+  //await init();
   await cleanDb();
 });
 
