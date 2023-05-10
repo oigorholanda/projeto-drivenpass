@@ -1,5 +1,4 @@
 import { Network } from '@prisma/client';
-
 import Cryptr from 'cryptr';
 import networkRepository from '../repositories/network.repository.js';
 

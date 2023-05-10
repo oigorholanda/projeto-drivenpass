@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
 import credentialRoutes from "./routes/credential.routes.js";
+import networkRoutes from "./routes/network.routes.js";
 dotenv.config();
 
 //servidor
@@ -15,7 +16,7 @@ app
 	.get('/health', (_req, res) => res.send("i'm OK!"))
 	.use('/user', userRoutes)
 	.use('/credentials', credentialRoutes)
-	.use('/network', ()=>{})
+	.use('/networks', networkRoutes)
 
 
 // porta e listen

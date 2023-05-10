@@ -25,7 +25,7 @@ export async function autorizeToken(req:Request, res: Response, next: NextFuncti
         next()
 
     } catch (error) {
-        return res.status(httpStatus.BAD_REQUEST).send("Invalid Token, please log in again");
+        return res.status(httpStatus.UNAUTHORIZED).send("Invalid Token, please log in again");
     }
 }
 

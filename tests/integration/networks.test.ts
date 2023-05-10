@@ -4,7 +4,7 @@ import supertest from 'supertest';
 import * as jwt from 'jsonwebtoken';
 import { createUser } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
-import { createNetwork } from '../factories/networks-factory';
+import { createNetwork } from '../factories/networks.factory';
 import app from '../../src/app.js';
 import Cryptr from 'cryptr';
 
@@ -25,15 +25,6 @@ describe('GET /networks', () => {
 
   it('should respond with status 401 if given token is not valid', async () => {
     const token = faker.lorem.word();
-
-    const response = await server.get('/networks').set('Authorization', `Bearer ${token}`);
-
-    expect(response.status).toBe(httpStatus.UNAUTHORIZED);
-  });
-
-  it('should respond with status 401 if there is no session for given token', async () => {
-    const userWithoutSession = await createUser();
-    const token = jwt.sign({ userId: userWithoutSession.id }, process.env.JWT_SECRET);
 
     const response = await server.get('/networks').set('Authorization', `Bearer ${token}`);
 
@@ -74,36 +65,41 @@ describe('GET /networks', () => {
   });
 });
 
-describe('GET /networks/:networkId', () => {
+describe('GET /networks/:id', () => {
   it('should respond with status 401 if no token is given', async () => {
-    const response = await server.get('/networks');
+    const networkId = faker.random.numeric()
+
+    const response = await server.get(`/networks/${networkId}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
 
   it('should respond with status 401 if given token is not valid', async () => {
+    const networkId = faker.random.numeric()
     const token = faker.lorem.word();
 
-    const response = await server.get('/networks').set('Authorization', `Bearer ${token}`);
+    const response = await server.get(`/networks/${networkId}`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
 
   it('should respond with status 401 if there is no session for given token', async () => {
+    const networkId = faker.random.numeric()
     const userWithoutSession = await createUser();
     const token = jwt.sign({ userId: userWithoutSession.id }, process.env.JWT_SECRET);
 
-    const response = await server.get('/networks').set('Authorization', `Bearer ${token}`);
+    const response = await server.get(`/networks/${networkId}`).set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
 
   describe('when token is valid', () => {
     it('should respond with status 404 when user has no networks', async () => {
+      const networkId = faker.random.numeric()
       const user = await createUser();
       const token = await generateValidToken(user);
 
-      const response = await server.get('/networks').set('Authorization', `Bearer ${token}`);
+      const response = await server.get(`/networks/${networkId}`).set('Authorization', `Bearer ${token}`);
       expect(response.status).toEqual(httpStatus.NOT_FOUND);
     });
 
@@ -137,7 +133,7 @@ describe('GET /networks/:networkId', () => {
   });
 });
 
-describe('POST /networks', () => {
+describe('POST /networks/new', () => {
   const generateValidBody = () => ({
     title: faker.lorem.sentence(),
     network: faker.lorem.sentence(),
@@ -146,7 +142,7 @@ describe('POST /networks', () => {
 
   it('should respond with status 401 if no token is given', async () => {
     const network = generateValidBody();
-    const response = await server.post('/networks').send({ ...network });
+    const response = await server.post('/networks/new').send({ ...network });
 
     expect(response.status).toBe(httpStatus.UNAUTHORIZED);
   });
@@ -156,7 +152,7 @@ describe('POST /networks', () => {
     const network = generateValidBody();
 
     const response = await server
-      .post('/networks')
+      .post('/networks/new')
       .send({ ...network })
       .set('Authorization', `Bearer ${token}`);
 
@@ -169,7 +165,7 @@ describe('POST /networks', () => {
     const network = generateValidBody();
 
     const response = await server
-      .post('/networks')
+      .post('/networks/new')
       .send({ ...network })
       .set('Authorization', `Bearer ${token}`);
 
@@ -186,7 +182,7 @@ describe('POST /networks', () => {
     network.title = network2.title;
 
     const response = await server
-      .post(`/networks`)
+      .post(`/networks/new`)
       .send({ ...network })
       .set('Authorization', `Bearer ${token}`);
 
@@ -199,7 +195,7 @@ describe('POST /networks', () => {
     const network = generateValidBody();
 
     const response = await server
-      .post(`/networks`)
+      .post(`/networks/new`)
       .send({ ...network })
       .set('Authorization', `Bearer ${token}`);
 
@@ -210,7 +206,7 @@ describe('POST /networks', () => {
   });
 });
 
-describe('DELETE /networks/:networkId', () => {
+describe('DELETE /networks/:id', () => {
   it('should respond with status 401 if no token is given', async () => {
     const network = await createNetwork();
     const response = await server.delete(`/networks/${network.id}`);

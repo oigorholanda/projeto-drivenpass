@@ -55,9 +55,11 @@ async function newCredential(req: Request, res: Response) {
 
         const credentials = await credentialService.createCredential(userId, newCredential)
 
-        return res.status(httpStatus.CREATED).send(credentials)
+        return res.status(httpStatus.CREATED).json({
+            credentialId: credentials.id
+          });
     } catch (error) {
-        if (error.name === "DuplicatedTitleError") {
+        if (error.type === "DuplicatedTitleError") {
             return res.status(httpStatus.CONFLICT).send(error.message);
         }
         return res.status(httpStatus.BAD_REQUEST).send(error);

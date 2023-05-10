@@ -1,1 +1,1 @@
-export * from './users-factory';
+export * from './users.factory';

@@ -1,6 +1,6 @@
-import faker from '@faker-js/faker';
+import {faker} from '@faker-js/faker';
 import { Credential, User } from '@prisma/client';
-import { createUser } from './users-factory';
+import { createUser } from './users.factory';
 import prisma from '../../src/config/database.js';
 import Cryptr from 'cryptr';
 

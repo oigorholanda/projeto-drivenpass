@@ -5,9 +5,9 @@ import { findCredential, deleteCredential, getCredentials, newCredential, listAl
 const credentialRoutes = Router();
 
 credentialRoutes.all('/*', autorizeToken);
-credentialRoutes.get('/all', listAll)
-credentialRoutes.get('', getCredentials)
-credentialRoutes.get('/:id', findCredential)
+credentialRoutes.get('/all', listAll);
+credentialRoutes.get('', getCredentials);
+credentialRoutes.get('/:id', findCredential);
 credentialRoutes.post('/new', newCredential);
 credentialRoutes.delete('/:id', deleteCredential);
 

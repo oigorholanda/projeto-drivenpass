@@ -38,7 +38,7 @@ async function logUser(req: Request, res: Response) {
 
         console.log(validUser); 
 
-        return res.status(httpStatus.OK).send(`Logado!`)
+        return res.status(httpStatus.OK).send(validUser)
     } catch (error) {
         if (error.type === "InvalidCredentialsError") {
             return res.status(httpStatus.UNAUTHORIZED).send(error.message) 
