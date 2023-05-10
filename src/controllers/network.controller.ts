@@ -20,7 +20,7 @@ async function networksList(req: Request, res: Response) {
 
 async function networksShow(req: Request, res: Response) {
     const userId = res.locals.userId
-  const { networkId } = req.params;
+    const { networkId } = req.params;
 
   try {
     const networks = await networkService.showNetwork(userId, parseInt(networkId));

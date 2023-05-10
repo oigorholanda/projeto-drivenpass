@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import credentialRepository from "../repositories/credential.repository.js";
 import httpStatus from "http-status";
 import { CredentialInput } from "protocols.js";
-import credentialService from "services/credential.service.js";
+import credentialService from "../services/credential.service.js";
 
 async function listAll(req: Request, res: Response) {
     const allCredentials = await credentialRepository.listAll()
@@ -28,15 +28,17 @@ async function getCredentials(req: Request, res: Response) {
 
 
 async function findCredential(req: Request, res: Response) {
-
     try {
-        const { credentialId } = req.params
         const userId = res.locals.userId
 
-        const credentials = await credentialService.getCredentialsById(userId, parseInt(credentialId))
+        const credentialId = Number(req.params.id)
+        if (!credentialId) return res.sendStatus(httpStatus.BAD_REQUEST);
+
+        const credentials = await credentialService.getCredentialsById(userId, credentialId)
 
         return res.status(httpStatus.OK).send(credentials)
     } catch (error) {
+        
         if (error.type === "NotFoundError") {
             return res.status(httpStatus.NOT_FOUND).send(error.message)
         }
@@ -55,7 +57,7 @@ async function newCredential(req: Request, res: Response) {
 
         return res.status(httpStatus.CREATED).send(credentials)
     } catch (error) {
-        if (error.name === 'DuplicatedTitleError') {
+        if (error.name === "DuplicatedTitleError") {
             return res.status(httpStatus.CONFLICT).send(error.message);
         }
         return res.status(httpStatus.BAD_REQUEST).send(error);
@@ -63,11 +65,13 @@ async function newCredential(req: Request, res: Response) {
 }
 
 async function deleteCredential(req: Request, res: Response) {
-    const { credentialId } = req.params
     const userId = res.locals.userId
+
+    const credentialId = Number(req.params.id)
+    if (!credentialId) return res.sendStatus(httpStatus.BAD_REQUEST);
   
     try {
-      await credentialService.destroyCredential(userId, parseInt(credentialId));
+      await credentialService.destroyCredential(userId, credentialId);
       return res.sendStatus(httpStatus.ACCEPTED);
     } catch (error) {
         if (error.type === "NotFoundError") {
