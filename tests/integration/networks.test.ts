@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import { createUser } from '../factories';
 import { cleanDb, generateValidToken } from '../helpers';
 import { createNetwork } from '../factories/networks.factory';
-import app from '../../src/app.js';
+import app from '../../src/app';
 import Cryptr from 'cryptr';
 
 beforeAll(async () => {

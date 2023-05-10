@@ -1,4 +1,4 @@
-import credentialRepository from "../repositories/credential.repository.js";
+import credentialRepository from "../repositories/credential.repository";
 import Cryptr from 'cryptr';
 import { CredentialInput } from "protocols";
 

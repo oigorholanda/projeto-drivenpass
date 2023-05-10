@@ -1,7 +1,6 @@
 {
   "name": "projeto-drivenpass",
   "version": "1.0.0",
-  "type": "module",
   "description": "Password Manager API",
   "main": "src/app.js",
   "scripts": {
@@ -31,6 +30,7 @@
     "cors": "^2.8.5",
     "cryptr": "^6.2.0",
     "dotenv": "^16.0.3",
+    "dotenv-cli": "^7.2.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "http-status": "^1.6.2",

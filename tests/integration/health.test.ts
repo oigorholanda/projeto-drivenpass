@@ -1,6 +1,6 @@
 import httpStatus from 'http-status';
 import supertest from 'supertest';
-import app from '../../src/app.js';
+import app from '../../src/app';
 
 beforeAll(async () => {
   //await init();
@@ -13,6 +13,6 @@ describe('GET /health', () => {
     const response = await server.get('/health');
 
     expect(response.status).toBe(httpStatus.OK);
-    expect(response.text).toBe('OK!');
+    expect(response.text).toBe("i'm OK!");
   });
 });

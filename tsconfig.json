@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "target": "es2020",
     "esModuleInterop": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "baseUrl": "src",
     "outDir": "dist",

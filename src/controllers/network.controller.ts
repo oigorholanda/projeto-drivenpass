@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
-import networkService from '../services/network.service.js';
-import { NetworkInput } from 'protocols.js';
+import networkService from '../services/network.service';
+import { NetworkInput } from 'protocols';
 
 async function networksList(req: Request, res: Response) {
     const userId = res.locals.userId

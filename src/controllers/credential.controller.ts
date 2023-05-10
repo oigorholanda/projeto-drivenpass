@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import credentialRepository from "../repositories/credential.repository.js";
+import credentialRepository from "../repositories/credential.repository";
 import httpStatus from "http-status";
-import { CredentialInput } from "protocols.js";
-import credentialService from "../services/credential.service.js";
+import { CredentialInput } from "protocols";
+import credentialService from "../services/credential.service";
 
 async function listAll(req: Request, res: Response) {
     const allCredentials = await credentialRepository.listAll()

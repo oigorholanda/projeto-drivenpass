@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { autorizeToken } from "../middlewares/auth.middleware.js";
-import { findCredential, deleteCredential, getCredentials, newCredential, listAll } from "../controllers/credential.controller.js";
+import { autorizeToken } from "../middlewares/auth.middleware";
+import { findCredential, deleteCredential, getCredentials, newCredential, listAll } from "../controllers/credential.controller";
 
 const credentialRoutes = Router();
 

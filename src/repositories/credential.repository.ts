@@ -1,6 +1,5 @@
-import { Credential } from "@prisma/client";
-import prisma from "../config/database.js";
-import { CredentialInput } from "protocols.js";
+import prisma from "../config/database";
+import { CredentialInput } from "protocols";
 
 async function listAll() {
     return prisma.credential.findMany();

@@ -1,7 +1,7 @@
 import {faker} from '@faker-js/faker';
 import { Network, User } from '@prisma/client';
 import { createUser } from './users.factory';
-import prisma from '../../src/config/database.js';
+import prisma from '../../src/config/database';
 import Cryptr from 'cryptr';
 
 const cryptr = new Cryptr(process.env.CRYPTR_KEY);

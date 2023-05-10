@@ -1,6 +1,6 @@
 import { Network } from '@prisma/client';
 import Cryptr from 'cryptr';
-import networkRepository from '../repositories/network.repository.js';
+import networkRepository from '../repositories/network.repository';
 
 
 const cryptr = new Cryptr(process.env.CRYPTR_KEY);

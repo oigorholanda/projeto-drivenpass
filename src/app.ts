@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import userRoutes from "./routes/user.routes.js";
-import credentialRoutes from "./routes/credential.routes.js";
-import networkRoutes from "./routes/network.routes.js";
+import userRoutes from "./routes/user.routes";
+import credentialRoutes from "./routes/credential.routes";
+import networkRoutes from "./routes/network.routes";
 dotenv.config();
 
 //servidor

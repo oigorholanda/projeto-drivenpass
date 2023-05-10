@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import userRepository from "../repositories/user.repository.js";
-import { UserInput } from "protocols.js";
-import userService from "../services/user.service.js";
+import userRepository from "../repositories/user.repository";
+import { UserInput } from "protocols";
+import userService from "../services/user.service";
 import httpStatus from "http-status";
 
 async function listAll(_req: Request, res: Response) {

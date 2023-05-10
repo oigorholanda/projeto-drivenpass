@@ -3,8 +3,8 @@ import httpStatus from 'http-status';
 import supertest from 'supertest';
 import { createUser } from '../factories';
 import { cleanDb } from '../helpers';
-import prisma from '../../src/config/database.js';
-import app from '../../src/app.js';
+import prisma from '../../src/config/database';
+import app from '../../src/app';
 import Cryptr from 'cryptr';
 
 beforeAll(async () => {

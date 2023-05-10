@@ -1,5 +1,5 @@
-import prisma from "../config/database.js";
-import { UserInput } from "protocols.js";
+import prisma from "../config/database";
+import { UserInput } from "protocols";
 
 async function getUsers() {
     return prisma.user.findMany()

@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import prisma from "../config/database.js";
+import prisma from "../config/database";
 
 async function findById(id: number, select?: Prisma.UserSelect) {
   const params: Prisma.NetworkFindUniqueArgs = {

@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import { autorizeToken } from '../middlewares/auth.middleware.js';
-import { validateSchema } from 'middlewares/validate.schema';
-import { networksDestroy, networksList, networksShow, networksStore } from '../controllers/network.controller.js';
+import { autorizeToken } from '../middlewares/auth.middleware';
+import { networksDestroy, networksList, networksShow, networksStore } from '../controllers/network.controller';
 
 const networkRoutes = Router();
 
